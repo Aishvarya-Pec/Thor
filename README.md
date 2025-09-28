@@ -4,9 +4,10 @@ Build complete applications and projects with AI assistance. From concept to dep
 
 ## 🌟 Live Demo
 
-**🚀 [Try THOR AI App Builder Live](https://4872f596.thor-ai-agent.pages.dev/)**
+**🚀 [Try THOR AI App Builder Live](https://a0f6556c.thor-ai-builder-new.pages.dev/)**
 
-> **Latest Stable Version**: https://main.thor-ai-agent.pages.dev/
+> **Latest Stable Version**: https://a0f6556c.thor-ai-builder-new.pages.dev/
+> **Previous Version**: https://main.thor-ai-agent.pages.dev/
 
 Experience the power of AI-driven development with our live deployment. Build applications, get intelligent code suggestions, and see real-time previews - all powered by advanced AI models.
 
@@ -57,7 +58,8 @@ npm run dev
 ```
 
 ### 🌐 Access Points
-- **🌟 Live Demo**: https://main.thor-ai-agent.pages.dev/
+- **🌟 Live Demo**: https://a0f6556c.thor-ai-builder-new.pages.dev/
+- **Previous Version**: https://main.thor-ai-agent.pages.dev/
 - **Local Development**: http://localhost:5173
 - **Direct Builder**: http://localhost:5173/?builder=true
 
@@ -143,4 +145,4 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ---
 
-**🌟 Ready to build something amazing? [Try THOR now!](https://main.thor-ai-agent.pages.dev/)**
+**🌟 Ready to build something amazing? [Try THOR now!](https://a0f6556c.thor-ai-builder-new.pages.dev/)**

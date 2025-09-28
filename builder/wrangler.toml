@@ -1,11 +1,11 @@
-name = "thor-ai-agent"
+name = "thor-ai-builder"
 pages_build_output_dir = "./build/client"
 compatibility_date = "2024-09-23"
 compatibility_flags = ["nodejs_compat"]
 
 # Cloudflare Pages configuration
 [pages]
-project_name = "thor-ai-agent"
+project_name = "thor-ai-builder"
 
 
 
