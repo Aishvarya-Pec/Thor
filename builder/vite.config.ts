@@ -18,10 +18,6 @@ export default defineConfig((config) => {
       rollupOptions: {
         output: {
           // Remove manualChunks to fix SSR build conflict
-        },
-      },
-      commonjsOptions: {
-        include: [/node_modules/,
           'react-use',
           'fast-deep-equal/react'
         ],

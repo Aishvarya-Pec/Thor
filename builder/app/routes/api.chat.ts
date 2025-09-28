@@ -163,20 +163,17 @@ What would you like to build today?`;
            new ReadableStream({
              start(controller) {
                // Send the response in proper SSE format
-               controller.enqueue(`data: ${JSON.stringify({ content: demoResponse })}\n\n`);
-               controller.enqueue('data: [DONE]\n\n');
+               controller.enqueue(new TextEncoder().encode(demoResponse));
                controller.close();
              }
            }),
            {
              status: 200,
              headers: {
-               'Content-Type': 'text/event-stream',
+               'Content-Type': 'text/plain; charset=utf-8',
                'Access-Control-Allow-Origin': '*',
                'Access-Control-Allow-Methods': 'POST, OPTIONS',
                'Access-Control-Allow-Headers': 'Content-Type',
-               'Cache-Control': 'no-cache',
-               'Connection': 'keep-alive',
              },
            }
          );

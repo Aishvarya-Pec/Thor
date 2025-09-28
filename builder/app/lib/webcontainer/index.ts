@@ -24,7 +24,7 @@ if (!import.meta.env.SSR) {
       .then(async () => {
         try {
           // Check if we're in production/Cloudflare environment
-          const isProduction = import.meta.env.PROD || window.location.hostname.includes('pages.dev');
+          const isProduction = false; // Force development mode for local testing
 
           if (isProduction) {
             console.log('Production environment detected, using simplified mode');
@@ -92,7 +92,7 @@ if (!import.meta.env.SSR) {
           console.log('Development environment detected, initializing WebContainer...');
 
           const timeoutPromise = new Promise((_, reject) => {
-            setTimeout(() => reject(new Error('WebContainer boot timeout')), 15000);
+            setTimeout(() => reject(new Error('WebContainer boot timeout')), 30000);
           });
 
           const bootPromise = WebContainer.boot({ workdirName: WORK_DIR_NAME });

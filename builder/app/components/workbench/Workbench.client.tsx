@@ -71,16 +71,14 @@ export const Workbench = memo(({ chatStarted, isStreaming }: WorkspaceProps) => 
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false);
-      console.log('Workbench loading timeout reached, showing interface');
-    }, 3000); // Increased to 3 seconds for production
+    }, 2000);
     return () => clearTimeout(timer);
   }, []);
 
   // Also set loading to false when WebContainer context is ready
   useEffect(() => {
-    if (webcontainerContext.loaded !== undefined) {
+    if (webcontainerContext.loaded) {
       setIsLoading(false);
-      console.log('WebContainer context ready, hiding loading');
     }
   }, [webcontainerContext.loaded]);
 

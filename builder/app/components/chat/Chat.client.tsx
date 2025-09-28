@@ -90,7 +90,7 @@ export const ChatImpl = memo(({ initialMessages = [], storeMessageHistory = asyn
 
   const { messages, isLoading, input, handleInputChange, setInput, stop, append } = useChat({
     api: '/api/chat',
-    stream: enableStreaming, // Enable streaming only in development
+    stream: false, // Disable streaming for better reliability
     headers: {
       'Content-Type': 'application/json',
     },

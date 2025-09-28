@@ -23,8 +23,9 @@ export const meta: MetaFunction = () => {
 export const loader = async (args: LoaderFunctionArgs) => {
   const url = new URL(args.request.url);
   const chatId = url.searchParams.get('chatId');
+  const builder = url.searchParams.get('builder');
 
-  return json({ chatId });
+  return json({ chatId, builder });
 };
 
 
