@@ -1,10 +1,8 @@
-import { useStore } from '@nanostores/react';
-import type { LinksFunction } from '@remix-run/cloudflare';
-import { Links, Meta, Outlet, Scripts, ScrollRestoration } from '@remix-run/react';
+import type { LinksFunction, LoaderFunctionArgs } from '@remix-run/cloudflare';
+import { json, Links, Meta, Outlet, Scripts, ScrollRestoration, useLoaderData } from '@remix-run/react';
 import tailwindReset from '@unocss/reset/tailwind-compat.css?url';
-import { themeStore } from './lib/stores/theme';
 import { stripIndents } from './utils/stripIndent';
-import { createHead } from 'remix-island';
+// import { createHead } from 'remix-island';
 import { useEffect } from 'react';
 import { ErrorBoundary } from './components/ErrorBoundary';
 
@@ -14,6 +12,10 @@ import xtermStyles from '@xterm/xterm/css/xterm.css?url';
 
 import 'virtual:uno.css';
 
+export async function loader({ request }: LoaderFunctionArgs) {
+  const theme = 'dark';
+  return json({ theme });
+}
 
 export const meta = () => {
   return [
@@ -52,51 +54,32 @@ export const links: LinksFunction = () => [
   },
 ];
 
-const inlineThemeCode = stripIndents`
-  setTutorialKitTheme();
-
-  function setTutorialKitTheme() {
-    let theme = localStorage.getItem('thor_theme');
-
-    if (!theme) {
-      theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-    }
-
-    document.querySelector('html')?.setAttribute('data-theme', theme);
-  }
-`;
-
-export const Head = createHead(() => (
-  <>
-    <meta charSet="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="THOR - AI App Builder. Build complete applications with AI assistance." />
-    <script dangerouslySetInnerHTML={{ __html: inlineThemeCode }} />
-  </>
-));
-
 export function Layout({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }
 
 export default function App() {
-  const theme = useStore(themeStore);
+  const { theme } = useLoaderData<typeof loader>();
+
+  useEffect(() => {
+    console.log('Client-side theme:', theme);
+  }, [theme]);
 
   return (
-    <ErrorBoundary>
-      <html lang="en" data-theme={theme}>
-        <head>
-          <Meta />
-          <Links />
-        </head>
-        <body>
+    <html lang="en" data-theme={theme}>
+      <head>
+        <Meta />
+        <Links />
+      </head>
+      <body>
+        <ErrorBoundary>
           <Layout>
             <Outlet />
           </Layout>
-          <ScrollRestoration />
-          <Scripts />
-        </body>
-      </html>
-    </ErrorBoundary>
+        </ErrorBoundary>
+        <ScrollRestoration />
+        <Scripts />
+      </body>
+    </html>
   );
 }

@@ -164,9 +164,9 @@ export const Workbench = memo(({ chatStarted, isStreaming }: WorkspaceProps) => 
           )}
         >
           <div className="absolute inset-0 px-6">
-            <div className="h-full flex flex-col bg-thor-elements-background-depth-2 border border-thor-elements-borderColor shadow-lg rounded-lg overflow-hidden">
+            <div className="h-full flex flex-col thor-card thor-glow thunder-border overflow-hidden">
               {/* Header with controls - always visible */}
-              <div className="flex items-center px-3 py-2 border-b border-thor-elements-borderColor bg-thor-elements-background-depth-1">
+              <div className="flex items-center px-3 py-2 asgard-header">
                 <Slider selected={selectedView} options={sliderOptions} setSelected={setSelectedView} />
                 <div className="ml-auto" />
                 {selectedView === 'code' && (

@@ -17,10 +17,11 @@ export default defineConfig((config) => {
       target: 'esnext',
       rollupOptions: {
         output: {
-          // Remove manualChunks to fix SSR build conflict
-          'react-use',
-          'fast-deep-equal/react'
-        ],
+          manualChunks: {
+            'react-use': ['react-use'],
+            'fast-deep-equal/react': ['fast-deep-equal/react']
+          },
+        },
       },
       cssMinify: true,
     },
@@ -29,10 +30,11 @@ export default defineConfig((config) => {
        alias: {
          // Let node-polyfills handle path module
        },
+       dedupe: ['react', 'react-dom'],
      },
     plugins: [
       nodePolyfills({
-        include: ['buffer', 'util', 'events'],
+        include: ["buffer", "util", "events"],
         globals: {
           global: true,
           process: true,
@@ -42,6 +44,7 @@ export default defineConfig((config) => {
       }),
       config.mode !== 'test' && remixCloudflareDevProxy(),
       remixVitePlugin({
+        // viteEnvironment: { name: "ssr" }, // removed – not a valid Remix plugin option
         future: {
           v3_fetcherPersist: true,
           v3_relativeSplatPath: true,
@@ -52,41 +55,44 @@ export default defineConfig((config) => {
       tsconfigPaths(),
       chrome129IssuePlugin(),
       // Custom plugin to replace server-only imports in @remix-run/react
-      {
-        name: 'remix-server-module-replacer',
-        transform(code, id) {
-          // Target the specific file within node_modules
-          if (id.includes('node_modules/@remix-run/react/dist/esm/single-fetch.js')) {
-            // Replace the import statements with an empty string
-            code = code.replace(
-              /import { UNSAFE_ErrorResponseImpl, redirect } from '@remix-run\/router';/,
-              ''
-            );
-            code = code.replace(
-              /import { UNSAFE_SingleFetchRedirectSymbol } from '@remix-run\/server-runtime';/,
-              ''
-            );
-            return { code, map: null }; // Return the transformed code
-          }
-          return null; // No changes for other modules
-        },
-      },
+      // {
+      //   name: 'remix-server-module-replacer',
+      //   transform(code, id) {
+      //     // Target the specific file within node_modules
+      //     if (id.includes('node_modules/@remix-run/react/dist/esm/single-fetch.js')) {
+      //       // Replace the import statements with an empty string
+      //       code = code.replace(
+      //         /import { UNSAFE_ErrorResponseImpl, redirect } from '@remix-run\/router';/,
+      //         ''
+      //       );
+      //       code = code.replace(
+      //         /import { UNSAFE_SingleFetchRedirectSymbol } from '@remix-run\/server-runtime';/,
+      //         ''
+      //       );
+      //       return { code, map: null }; // Return the transformed code
+      //     }
+      //     return null; // No changes for other modules
+      //   },
+      // },
       // config.mode === 'production' && optimizeCssModules({ apply: 'build' }),
     ],
     optimizeDeps: {
-      include: ['react', 'react-dom', '@codemirror/view', '@codemirror/state', 'framer-motion'],
-      exclude: ['entities', 'path', 'node:path', 'fs', 'util'],
+      include: [
+        "fast-content-type-parse",
+        "jszip",
+        "file-saver",
+        "react-dom",
+        "@xterm/addon-fit",
+        "@xterm/addon-web-links",
+        "@xterm/xterm",
+        "style-to-js",
+        "debug",
+        "ms",
+      ],
+      noDiscovery: false,
     },
     ssr: {
       noExternal: [
-        // This is a temporary workaround to avoid a bug in Vite that prevents
-        // `virtual-module` from being externalized. This will be removed once
-        // the bug is fixed.
-        "virtual-module",
-        // Make sure to enable this when you are using a package that is not
-        // compatible with ESM. For example, if you are using a package that
-        // uses `require` instead of `import`.
-        // "your-package-name",
       ],
       target: 'webworker',
       resolve: {

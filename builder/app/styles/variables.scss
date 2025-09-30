@@ -111,19 +111,19 @@
   --thor-elements-borderColorActive: #94a3b8;
 
   --thor-elements-bg-depth-1: #0f172a;
-  --thor-elements-bg-depth-2: #1e293b;
+  --thor-elements-bg-depth-2: rgba(30, 41, 59, 0.6);
   --thor-elements-bg-depth-3: #334155;
   --thor-elements-bg-depth-4: rgba(148, 163, 184, 0.05);
 
-  --thor-elements-textPrimary: #f8fafc;
-  --thor-elements-textSecondary: #cbd5e1;
-  --thor-elements-textTertiary: #94a3b8;
+  --thor-elements-textPrimary: #ffffff;
+  --thor-elements-textSecondary: #ffffff;
+  --thor-elements-textTertiary: #ffffff;
 
   --thor-elements-code-background: theme('colors.gray.800');
   --thor-elements-code-text: theme('colors.white');
 
-  --thor-elements-button-primary-background: #475569;
-  --thor-elements-button-primary-backgroundHover: #64748b;
+  --thor-elements-button-primary-background: #3b82f6; /* bright blue */
+  --thor-elements-button-primary-backgroundHover: #2563eb; /* deeper hover */
   --thor-elements-button-primary-text: #ffffff;
 
   --thor-elements-button-secondary-background: rgba(148, 163, 184, 0.1);
@@ -136,7 +136,7 @@
 
   --thor-elements-item-contentDefault: theme('colors.alpha.white.50');
   --thor-elements-item-contentActive: theme('colors.white');
-  --thor-elements-item-contentAccent: theme('colors.accent.500');
+  --thor-elements-item-contentAccent: #60a5fa; /* brighter accent */
   --thor-elements-item-contentDanger: theme('colors.red.500');
   --thor-elements-item-backgroundDefault: rgba(255, 255, 255, 0);
   --thor-elements-item-backgroundActive: theme('colors.alpha.white.10');
@@ -144,7 +144,7 @@
   --thor-elements-item-backgroundDanger: theme('colors.alpha.red.10');
 
   --thor-elements-loader-background: theme('colors.alpha.gray.10');
-  --thor-elements-loader-progress: theme('colors.accent.500');
+  --thor-elements-loader-progress: #60a5fa; /* brighter progress */
 
   --thor-elements-artifacts-background: theme('colors.gray.900');
   --thor-elements-artifacts-backgroundHover: theme('colors.alpha.white.5');
@@ -156,7 +156,7 @@
   --thor-elements-actions-code-background: theme('colors.gray.800');
 
   --thor-elements-messages-background: theme('colors.gray.800');
-  --thor-elements-messages-linkColor: theme('colors.accent.500');
+  --thor-elements-messages-linkColor: #93c5fd; /* brighter links */
   --thor-elements-messages-code-background: theme('colors.gray.900');
   --thor-elements-messages-inlineCode-background: theme('colors.gray.700');
   --thor-elements-messages-inlineCode-text: var(--thor-elements-textPrimary);
@@ -169,7 +169,7 @@
 
   --thor-elements-dividerColor: theme('colors.gray.100');
 
-  --thor-elements-prompt-background: theme('colors.alpha.gray.80');
+  --thor-elements-prompt-background: theme('colors.alpha.gray.30');
 
   --thor-elements-sidebar-dropdownShadow: theme('colors.alpha.gray.30');
   --thor-elements-sidebar-buttonBackgroundDefault: theme('colors.alpha.accent.10');

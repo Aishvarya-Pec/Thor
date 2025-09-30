@@ -2,7 +2,6 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { toast } from 'react-toastify';
 import { useNavigate } from '@remix-run/react';
 import { Dialog, DialogButton, DialogDescription, DialogRoot, DialogTitle } from '../../components/ui/Dialog';
-import { ThemeSwitch } from '../../components/ui/ThemeSwitch';
 import { db, deleteById, getAll, chatId, type ChatHistoryItem } from '../../lib/persistence';
 import { logger } from '../../utils/logger';
 import { HistoryItem } from './HistoryItem';
@@ -179,9 +178,7 @@ export function Menu() {
             </Dialog>
           </DialogRoot>
         </div>
-        <div className="flex items-center border-t border-thor-elements-borderColor p-4">
-          <ThemeSwitch className="ml-auto" />
-        </div>
+        {/* Theme switch removed: app uses a single dark theme */}
       </div>
     </div>
   );

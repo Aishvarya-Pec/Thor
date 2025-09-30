@@ -3,9 +3,8 @@ import { RemixServer } from '@remix-run/react';
 import { isbot } from 'isbot';
 import pkg from 'react-dom/server';
 const { renderToReadableStream } = pkg;
-import { renderHeadToString } from 'remix-island';
-import { Head } from './root';
-import { themeStore } from './lib/stores/theme';
+import { stripIndents } from './utils/stripIndent';
+
 export default async function handleRequest(
   request: Request,
   responseStatusCode: number,
@@ -14,54 +13,16 @@ export default async function handleRequest(
   _loadContext: AppLoadContext,
 ) {
 
-  const readable = await renderToReadableStream(<RemixServer context={remixContext} url={request.url} />, {
-    signal: request.signal,
-    onError(error: unknown) {
-      console.error(error);
-      responseStatusCode = 500;
+  const theme = 'dark';
+
+  const readable = await renderToReadableStream(<RemixServer context={{ ...remixContext, theme }} url={request.url} />, {
+      signal: request.signal,
+      onError(error: unknown) {
+        console.error(error);
+        responseStatusCode = 500;
+      },
     },
-  });
-
-  const body = new ReadableStream({
-    start(controller) {
-      const head = renderHeadToString({ request, remixContext, Head });
-
-      controller.enqueue(
-        new Uint8Array(
-          new TextEncoder().encode(
-            `<!DOCTYPE html><html lang="en" data-theme="${themeStore.value}"><head>${head}</head><body><div id="root" class="w-full h-full">`,
-          ),
-        ),
-      );
-
-      const reader = readable.getReader();
-
-      function read() {
-        reader
-          .read()
-          .then(({ done, value }) => {
-            if (done) {
-              controller.enqueue(new Uint8Array(new TextEncoder().encode(`</div></body></html>`)));
-              controller.close();
-
-              return;
-            }
-
-            controller.enqueue(value);
-            read();
-          })
-          .catch((error) => {
-            controller.error(error);
-            readable.cancel();
-          });
-      }
-      read();
-    },
-
-    cancel() {
-      readable.cancel();
-    },
-  });
+  );
 
   if (isbot(request.headers.get('user-agent') || '')) {
     await readable.allReady;
@@ -71,8 +32,9 @@ export default async function handleRequest(
 
   responseHeaders.set('Cross-Origin-Embedder-Policy', 'require-corp');
   responseHeaders.set('Cross-Origin-Opener-Policy', 'same-origin');
+  responseHeaders.set('Set-Cookie', `thor_theme=dark; Path=/; Max-Age=${60 * 60 * 24 * 365}; SameSite=Lax`);
 
-  return new Response(body, {
+  return new Response(readable, {
     headers: responseHeaders,
     status: responseStatusCode,
   });

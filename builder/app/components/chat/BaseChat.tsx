@@ -175,7 +175,7 @@ export const BaseChat = React.forwardRef<HTMLDivElement, BaseChatProps>(
                   model={model}
                   setModel={setModel}
                 />
-                <div className="relative bg-thor-elements-prompt-background border border-thor-elements-borderColor rounded-lg overflow-hidden">
+                <div className="relative thor-card thor-glow thunder-border overflow-hidden">
                   {/* File Upload Area */}
                   {attachedFiles.length > 0 && (
                     <div className="px-4 pt-2 flex flex-wrap gap-2">
@@ -195,7 +195,7 @@ export const BaseChat = React.forwardRef<HTMLDivElement, BaseChatProps>(
                   <div className="relative">
                     <textarea
                       ref={textareaRef}
-                      className={`w-full pl-4 pt-4 pr-16 focus:outline-none resize-none text-md text-thor-elements-textPrimary placeholder-thor-elements-textTertiary bg-transparent`}
+                      className={`w-full pl-4 pt-4 pr-24 md:pr-40 focus:outline-none resize-none text-md text-thor-elements-textPrimary placeholder-thor-elements-textTertiary bg-transparent`}
                       onKeyDown={(event) => {
                         if (event.key === 'Enter') {
                           if (event.shiftKey) {
@@ -231,7 +231,7 @@ export const BaseChat = React.forwardRef<HTMLDivElement, BaseChatProps>(
                       }}
                     />
                   </div>
-                  <div className="flex justify-between text-sm p-4 pt-2">
+                  <div className="flex justify-between text-sm p-4 pt-2 rune-divider">
                     <div className="flex gap-1 items-center">
                       <input
                         ref={fileInputRef}

@@ -1,6 +1,6 @@
 import { atom } from 'nanostores';
 
-export type Theme = 'dark' | 'light';
+export type Theme = 'dark';
 
 export const kTheme = 'thor_theme';
 
@@ -8,28 +8,17 @@ export function themeIsDark() {
   return themeStore.get() === 'dark';
 }
 
-export const DEFAULT_THEME = 'light';
+export const DEFAULT_THEME = 'dark';
 
 export const themeStore = atom<Theme>(initStore());
 
 function initStore() {
-  if (!import.meta.env.SSR) {
-    const persistedTheme = localStorage.getItem(kTheme) as Theme | undefined;
-    const themeAttribute = document.querySelector('html')?.getAttribute('data-theme');
-
-    return persistedTheme ?? (themeAttribute as Theme) ?? DEFAULT_THEME;
-  }
-
+  // Single-theme app: always dark
   return DEFAULT_THEME;
 }
 
 export function toggleTheme() {
-  const currentTheme = themeStore.get();
-  const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-
-  themeStore.set(newTheme);
-
-  localStorage.setItem(kTheme, newTheme);
-
-  document.querySelector('html')?.setAttribute('data-theme', newTheme);
+  // No-op toggle: enforce dark theme
+  themeStore.set('dark');
+  document.querySelector('html')?.setAttribute('data-theme', 'dark');
 }

@@ -69,7 +69,7 @@ export default function Index() {
  }
 
   return (
-    <ClientOnly fallback={null}>
+    <ClientOnly fallback={<main className="min-h-screen bg-black text-white" /> }>
       {() => (
         <LanguageProvider>
           <main className="min-h-screen bg-black text-white">

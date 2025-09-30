@@ -3,16 +3,14 @@ pages_build_output_dir = "./build/client"
 compatibility_date = "2024-09-23"
 compatibility_flags = ["nodejs_compat"]
 
-# Cloudflare Pages configuration
-[pages]
-project_name = "thor-ai-builder"
-
-
-
-
 [vars]
 # Add your OpenRouter API key here
-OPEN_ROUTER_API_KEY = "your-openrouter-api-key-here"
+OPEN_ROUTER_API_KEY = "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"
 OPEN_ROUTER_API_BASE_URL = "https://openrouter.ai/api/v1"
 CLERK_PUBLISHABLE_KEY = "pk_test_Y3JlZGlibGUtc2hhZC01LmNsZXJrLmFjY291bnRzLmRldiQ"
 CLERK_SECRET_KEY = "sk_test_JUlDDtG9Whj2oMlzO6GkitM8gRRdbdth4iBXVmBImc"
+SESSION_SECRET = "your-session-secret-here"
+
+[[kv_namespaces]]
+binding = "KV_NAMESPACE"
+id = "<YOUR_KV_NAMESPACE_ID>"

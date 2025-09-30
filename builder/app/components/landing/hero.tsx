@@ -51,6 +51,8 @@ export const Hero = () => {
             autoPlay
             loop
             muted
+            preload="metadata"
+            onError={(e) => console.warn('Hero video failed to load', e)}
             className="absolute left-0 top-0 size-full object-cover object-center"
           />
         </div>

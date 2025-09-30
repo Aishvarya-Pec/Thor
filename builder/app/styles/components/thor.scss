@@ -1,0 +1,70 @@
+/* Thor-themed utility classes: lightning glow, rune accents, Asgard headers */
+
+.thor-card {
+  position: relative;
+  border-radius: 12px;
+  background:
+    radial-gradient(120% 120% at 10% 0%, rgba(59,130,246,0.08) 0%, rgba(147,51,234,0.06) 40%, rgba(234,179,8,0.04) 70%, transparent 100%),
+    var(--thor-elements-prompt-background);
+  box-shadow: 0 8px 24px rgba(2, 6, 23, 0.35);
+}
+
+.thunder-border {
+  /* electric border with animated glow */
+  border: 1px solid rgba(147, 197, 253, 0.35);
+  outline: 1px solid rgba(99, 102, 241, 0.25);
+}
+
+.thor-glow::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  background: conic-gradient(from 180deg at 50% 50%, rgba(59,130,246,0.15), rgba(147,51,234,0.15), rgba(234,179,8,0.12), rgba(59,130,246,0.15));
+  filter: blur(14px);
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.asgard-header {
+  background: linear-gradient(180deg, rgba(30,58,138,0.45) 0%, rgba(17,24,39,0.6) 100%);
+  border-bottom: 1px solid rgba(147, 197, 253, 0.25);
+}
+
+.mjolnir-button {
+  position: absolute;
+  top: 18px;
+  right: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  color: white;
+  background: linear-gradient(135deg, rgba(37,99,235,0.95) 0%, rgba(99,102,241,0.95) 50%, rgba(147,51,234,0.9) 100%);
+  border: 1px solid rgba(96, 165, 250, 0.35);
+  box-shadow: 0 10px 24px rgba(2, 6, 23, 0.45), inset 0 0 14px rgba(147,51,234,0.45);
+  transition: transform 0.18s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.18s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 20;
+}
+
+.mjolnir-button:hover {
+  transform: translateY(-1px) scale(1.04);
+  box-shadow: 0 14px 28px rgba(2, 6, 23, 0.55), inset 0 0 18px rgba(147,51,234,0.55);
+}
+
+.mjolnir-button:active {
+  transform: scale(0.98);
+}
+
+.mjolnir-icon {
+  font-size: 18px;
+  text-shadow: 0 0 10px rgba(147,51,234,0.7), 0 0 4px rgba(59,130,246,0.7);
+}
+
+/* Optional rune accent divider */
+.rune-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(147,51,234,0.5), rgba(59,130,246,0.5), transparent);
+}

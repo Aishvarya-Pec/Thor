@@ -2,6 +2,7 @@ import { WebContainer } from '@webcontainer/api';
 import { map, type MapStore } from 'nanostores';
 import type { ThorAction } from '../../types/actions';
 import { createScopedLogger } from '../../utils/logger';
+import { WORK_DIR } from '../../utils/constants';
 import { unreachable } from '../../utils/unreachable';
 import type { ActionCallbackData } from './message-parser';
 
@@ -168,12 +169,29 @@ export class ActionRunner {
     const maxRetries = 5;
     let lastError: Error | null = null;
 
+    // Normalize file path to ensure files are created under WORK_DIR
+    const normalizePath = (path: string) => {
+      if (!path) return `${WORK_DIR}/unknown-file`;
+
+      // Ensure leading slash
+      const withLeadingSlash = path.startsWith('/') ? path : `/${path}`;
+
+      // If already under WORK_DIR, return as-is
+      if (withLeadingSlash.startsWith(WORK_DIR)) {
+        return withLeadingSlash;
+      }
+
+      // Otherwise, place under WORK_DIR
+      return `${WORK_DIR}${withLeadingSlash}`;
+    };
+
     for (let attempt = 1; attempt <= maxRetries; attempt++) {
       try {
-        logger.debug(`File creation attempt ${attempt} for: ${action.filePath}`);
+        const targetPath = normalizePath(action.filePath);
+        logger.debug(`File creation attempt ${attempt} for: ${targetPath}`);
 
         // Simple dirname function for WebContainer environment
-        let folder = action.filePath.substring(0, action.filePath.lastIndexOf('/'));
+        let folder = targetPath.substring(0, targetPath.lastIndexOf('/'));
         folder = folder.replace(/\/+$/g, '');
 
         logger.debug(`Creating folder: ${folder}`);
@@ -196,15 +214,15 @@ export class ActionRunner {
           await webcontainer.fs.mkdir(folder, { recursive: true });
         }
 
-        logger.debug(`Writing file: ${action.filePath}, content length: ${action.content.length}`);
-        await webcontainer.fs.writeFile(action.filePath, action.content, { encoding: 'utf-8' });
-        logger.debug(`File written successfully: ${action.filePath}`);
+        logger.debug(`Writing file: ${targetPath}, content length: ${action.content.length}`);
+        await webcontainer.fs.writeFile(targetPath, action.content, { encoding: 'utf-8' });
+        logger.debug(`File written successfully: ${targetPath}`);
 
         return; // Success, exit the retry loop
 
       } catch (error) {
         lastError = error as Error;
-        logger.error(`File operation attempt ${attempt} failed for ${action.filePath}:`, error);
+        logger.error(`File operation attempt ${attempt} failed:`, error);
 
         if (attempt < maxRetries) {
           const delay = 500 * attempt; // Progressive delay
