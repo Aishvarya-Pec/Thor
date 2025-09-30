@@ -33,15 +33,9 @@ export default defineConfig((config) => {
        dedupe: ['react', 'react-dom'],
      },
     plugins: [
-      nodePolyfills({
-        include: ["buffer", "util", "events"],
-        globals: {
-          global: true,
-          process: true,
-          Buffer: true,
-        },
-        protocolImports: true,
-      }),
+  nodePolyfills({
+  include: ['path', 'buffer'],
+}),
       config.mode !== 'test' && remixCloudflareDevProxy(),
       remixVitePlugin({
         // viteEnvironment: { name: "ssr" }, // removed – not a valid Remix plugin option

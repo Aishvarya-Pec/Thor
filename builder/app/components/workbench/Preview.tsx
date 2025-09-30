@@ -16,19 +16,16 @@ export const Preview = memo(() => {
   const [url, setUrl] = useState('');
   const [iframeUrl, setIframeUrl] = useState<string | undefined>();
 
-  useEffect(() => {
-    if (!activePreview) {
-      setUrl('');
-      setIframeUrl(undefined);
-
-      return;
-    }
-
-    const { baseUrl } = activePreview;
-
-    setUrl(baseUrl);
-    setIframeUrl(baseUrl);
-  }, [activePreview, iframeUrl]);
+useEffect(() => {
+  if (!activePreview) {
+    setUrl('');
+    setIframeUrl(undefined);
+    return;
+  }
+  const { baseUrl } = activePreview;
+  setUrl(baseUrl);
+  setIframeUrl(baseUrl);
+}, [activePreview]);
 
   const validateUrl = useCallback(
     (value: string) => {
